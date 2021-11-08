@@ -28,7 +28,6 @@ contract Collection/* is ICollection*/
     uint32 public constant PREVIOUS_PRICE_SECONDS_AGO = 12 hours;
 
     IUniswapV3Pool immutable public uniswapPool;
-    string  immutable public name;
     uint32  immutable public id;
     uint128 immutable public baseAmount;
     string public baseTokenURI;
@@ -37,7 +36,6 @@ contract Collection/* is ICollection*/
     int[] public relativeLevels;
 
     constructor(
-        string         _name,
         uint32         _collectionID,
         string  memory _baseTokenURI,
         IUniswapV3Pool _uniswapPool,
@@ -53,14 +51,6 @@ contract Collection/* is ICollection*/
         baseAmount = _baseAmount;
         priceLevels = _priceLevels;
         relativeLevels = _relativeLevels;
-    }
-
-    function collectionName()
-        public
-        view
-        returns (string memory)
-    {
-        return name;
     }
 
     function collectionID()
