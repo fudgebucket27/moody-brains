@@ -1,1 +1,1 @@
-./node_modules/.bin/truffle-flattener contracts/MoodyApes.sol > flattened/MoodyApes.sol
+./node_modules/.bin/truffle-flattener contracts/MoodyApesNFT.sol > flattened/MoodyApesNFT.sol
