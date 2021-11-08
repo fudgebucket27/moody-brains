@@ -44,7 +44,6 @@ contract Collection/* is ICollection*/
         int[]   memory _relativeLevels
         )
     {
-        name = _name;
         id = _collectionID;
         baseTokenURI = _baseTokenURI;
         uniswapPool = _uniswapPool;
