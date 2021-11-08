@@ -8,8 +8,18 @@ pragma solidity ^0.8.2;
  */
 interface ICollection
 {
+    function collectionName()
+        public
+        view
+        returns (string memory);
+        
+    function collectionID()
+        public
+        view
+        returns (uint32 id);
+
     function tokenURI(uint256 tokenId)
-        external
+        public
         view
         returns (string memory);
 }

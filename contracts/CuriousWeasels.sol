@@ -60,13 +60,12 @@ contract CuriousWeasels is ERC1155, Ownable, IL2MintableNFT, AddressSet
         _mintBatch(to, ids, amounts, data);
     }
 
-    function setCollection(
-        uint32 collectionID,
-        ICollection collection
-        )
+    function addCollection(ICollection collection)
         public
         onlyOwner
     {
+        uint32 collectionID = collection.collectionID();
+        require(collections[collectionID] == 0, "collection id used");
         collections[collectionID] = collection;
     }
 

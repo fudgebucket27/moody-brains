@@ -10,6 +10,14 @@ import '@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol';
 
 /**
  * @title Collection
+ * 
+ * Devs: currently `is ICollection*` is commented out because I haven't found a good way
+ * to share the interface contract between different solidity versions. The Collection
+ * contracts are compiled with solidity 0.7 because of the dependency on the uniswap
+ * oracle lib, and the main NFT contracts are compiled with solidity 0.8 because it
+ * uses the latest openzeppelin versions of the contract. The interface is used by
+ * both set of contracts which currently makes the compilation fail when used by both
+ * sets of contracts.
  */
 contract Collection/* is ICollection*/
 {
@@ -20,6 +28,8 @@ contract Collection/* is ICollection*/
     uint32 public constant PREVIOUS_PRICE_SECONDS_AGO = 12 hours;
 
     IUniswapV3Pool immutable public uniswapPool;
+    string  immutable public name;
+    uint32  immutable public id;
     uint128 immutable public baseAmount;
     string public baseTokenURI;
 
@@ -27,6 +37,8 @@ contract Collection/* is ICollection*/
     int[] public relativeLevels;
 
     constructor(
+        string         _name,
+        uint32         _collectionID,
         string  memory _baseTokenURI,
         IUniswapV3Pool _uniswapPool,
         uint128        _baseAmount,
@@ -34,6 +46,8 @@ contract Collection/* is ICollection*/
         int[]   memory _relativeLevels
         )
     {
+        name = _name;
+        id = _collectionID;
         baseTokenURI = _baseTokenURI;
         uniswapPool = _uniswapPool;
         baseAmount = _baseAmount;
@@ -41,9 +55,25 @@ contract Collection/* is ICollection*/
         relativeLevels = _relativeLevels;
     }
 
+    function collectionName()
+        public
+        view
+        returns (string memory)
+    {
+        return name;
+    }
+
+    function collectionID()
+        public
+        view
+        returns (uint32)
+    {
+        return id;
+    }
+
     function tokenURI(uint256 tokenId)
         //override
-        external
+        public
         view
         returns (string memory)
     {
@@ -51,6 +81,8 @@ contract Collection/* is ICollection*/
         // -  4 bytes: collection ID
         // - 16 bytes: base price
         // - 12 bytes: id
+        require(uint32((tokenId >> 224) & 0xFFFFFFFF) == id, "inconsistent collection id");
+
         uint basePrice = (tokenId >> 96) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
         uint id = tokenId & 0xFFFFFFFFFFFFFFFFFFFFFFFF;
 
