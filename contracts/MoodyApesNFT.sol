@@ -18,7 +18,7 @@ contract MoodyApesNFT is ERC1155, Ownable, IL2MintableNFT, AddressSet
 {
     event CollectionUpdated(
         uint32  indexed collectionID,
-        address         collection
+        ICollection     collection
     );
 
     event MintFromL2(
@@ -141,7 +141,7 @@ contract MoodyApesNFT is ERC1155, Ownable, IL2MintableNFT, AddressSet
         override
         returns (address[] memory)
     {
-        return addressesInSet(MINTERS) || isAddressInSet(DEPRECATED_MINTERS);
+        return addressesInSet(MINTERS);
     }
 
     function isMinter(address addr)
@@ -149,6 +149,6 @@ contract MoodyApesNFT is ERC1155, Ownable, IL2MintableNFT, AddressSet
         view
         returns (bool)
     {
-        return isAddressInSet(MINTERS, addr);
+        return isAddressInSet(MINTERS, addr) || isAddressInSet(DEPRECATED_MINTERS, addr);
     }
 }

@@ -10,7 +10,7 @@ import '@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol';
 
 /**
  * @title Collection
- * 
+ *
  * Devs: currently `is ICollection*` is commented out because I haven't found a good way
  * to share the interface contract between different solidity versions. The Collection
  * contracts are compiled with solidity 0.7 because of the dependency on the uniswap
@@ -28,7 +28,7 @@ contract Collection/* is ICollection*/
     uint32 public constant PREVIOUS_PRICE_SECONDS_AGO = 12 hours;
 
     IUniswapV3Pool immutable public uniswapPool;
-    uint32  immutable public id;
+    uint32  immutable public /*override*/ collectionID;
     uint128 immutable public baseAmount;
     string public baseTokenURI;
 
@@ -44,20 +44,12 @@ contract Collection/* is ICollection*/
         int[]   memory _relativeLevels
         )
     {
-        id = _collectionID;
+        collectionID = _collectionID;
         baseTokenURI = _baseTokenURI;
         uniswapPool = _uniswapPool;
         baseAmount = _baseAmount;
         priceLevels = _priceLevels;
         relativeLevels = _relativeLevels;
-    }
-
-    function collectionID()
-        public
-        view
-        returns (uint32)
-    {
-        return id;
     }
 
     function tokenURI(uint256 tokenId)
@@ -70,10 +62,9 @@ contract Collection/* is ICollection*/
         // -  4 bytes: collection ID
         // - 16 bytes: base price
         // - 12 bytes: id
-        require(uint32((tokenId >> 224) & 0xFFFFFFFF) == id, "inconsistent collection id");
+        require(uint32((tokenId >> 224) & 0xFFFFFFFF) == collectionID, "inconsistent collection id");
 
         uint basePrice = (tokenId >> 96) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
-        uint id = tokenId & 0xFFFFFFFFFFFFFFFFFFFFFFFF;
 
         uint currentPrice = getPrice(CURRENT_PRICE_SECONDS_AGO);
         uint previousPrice = getPrice(PREVIOUS_PRICE_SECONDS_AGO);
