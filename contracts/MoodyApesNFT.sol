@@ -95,6 +95,9 @@ contract MoodyApesNFT is ERC1155, Ownable, IL2MintableNFT, AddressSet
     {
         if (enabled) {
             addAddressToSet(MINTERS, minter, true);
+            if (isAddressInSet(DEPRECATED_MINTERS, minter)) {
+                removeAddressFromSet(DEPRECATED_MINTERS, minter);
+            }
         } else {
             removeAddressFromSet(MINTERS, minter);
             addAddressToSet(DEPRECATED_MINTERS, minter, true);
