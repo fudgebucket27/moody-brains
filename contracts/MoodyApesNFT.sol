@@ -11,10 +11,10 @@ import "./external/IL2MintableNFT.sol";
 import "./ICollection.sol";
 
 /**
- * @title MoodyApes
+ * @title MoodyApesNFT
  */
 
-contract MoodyApes is ERC1155, Ownable, IL2MintableNFT, AddressSet
+contract MoodyApesNFT is ERC1155, Ownable, IL2MintableNFT, AddressSet
 {
     event CollectionUpdated(
         uint32  indexed collectionID,
