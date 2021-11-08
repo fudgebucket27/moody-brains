@@ -86,12 +86,10 @@ contract Collection/* is ICollection*/
             abi.encodePacked(
                 baseTokenURI,
                 "/",
-                id.toString(),
-                "/",
-                basePrice.toString(),
-                "/",
+                tokenId.toString(),
+                "_",
                 baseLevel.toString(),
-                "/",
+                "_",
                 relativeLevel.toString(),
                 "/metadata.json"
             )

@@ -1,4 +1,4 @@
-# CuriousWeasels
+# MoodyApes
 
 Codename for the Moody Apes.
 

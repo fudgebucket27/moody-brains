@@ -1,4 +1,4 @@
-const NftContract = artifacts.require("./CuriousWeasels.sol");
+const NftContract = artifacts.require("./MoodyApes.sol");
 
 module.exports = async (deployer, network, addresses) => {
   console.log("Deploying to " + network);

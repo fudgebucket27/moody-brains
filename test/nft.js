@@ -1,7 +1,7 @@
 const truffleAssert = require('truffle-assertions');
 var assert = require('assert');
 
-const NftContract = artifacts.require("CuriousWeasels.sol");
+const NftContract = artifacts.require("MoodyApes.sol");
 const Collection = artifacts.require("Collection.sol");
 const TestUniswapPool = artifacts.require("TestUniswapPool.sol");
 
