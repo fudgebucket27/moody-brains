@@ -1,7 +1,7 @@
 {
   "name": "curious-weasels-nfts",
   "version": "1.0.0",
-  "description": "CuriousWeasels smart contracts.",
+  "description": "MoodyApesNFT smart contracts.",
   "main": "index.js",
   "scripts": {
     "ganache-cli": "ganache-cli -d -p 7545 --gasLimit=10000000",

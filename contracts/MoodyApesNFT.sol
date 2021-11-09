@@ -11,10 +11,16 @@ import "./external/IL2MintableNFT.sol";
 import "./ICollection.sol";
 
 /**
- * @title CuriousWeasels
+ * @title MoodyApesNFT
  */
-contract CuriousWeasels is ERC1155, Ownable, IL2MintableNFT, AddressSet
+
+contract MoodyApesNFT is ERC1155, Ownable, IL2MintableNFT, AddressSet
 {
+    event CollectionUpdated(
+        uint32  indexed collectionID,
+        ICollection     collection
+    );
+
     event MintFromL2(
         address owner,
         uint256 id,
@@ -23,6 +29,7 @@ contract CuriousWeasels is ERC1155, Ownable, IL2MintableNFT, AddressSet
     );
 
     bytes32 internal constant MINTERS = keccak256("__MINTERS__");
+    bytes32 internal constant DEPRECATED_MINTERS = keccak256("__DEPRECATED_MINTERS__");
 
     address public immutable layer2Address;
 
@@ -46,41 +53,54 @@ contract CuriousWeasels is ERC1155, Ownable, IL2MintableNFT, AddressSet
         layer2Address = _layer2Address;
     }
 
-    function mint(address account, uint256 id, uint256 amount, bytes memory data)
-        public
+    function mint(
+        address       account,
+        uint256       id,
+        uint256       amount,
+        bytes  memory data
+        )
+        external
         onlyFromMinter
     {
         _mint(account, id, amount, data);
     }
 
-    function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
-        public
+    function mintBatch(
+        address          to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes     memory data
+        )
+        external
         onlyFromMinter
     {
         _mintBatch(to, ids, amounts, data);
     }
 
-    function setCollection(
-        uint32 collectionID,
-        ICollection collection
-        )
-        public
+    function addCollection(ICollection collection)
+        external
         onlyOwner
     {
-        collections[collectionID] = collection;
+        uint32 id = collection.collectionID();
+        collections[id] = collection;
+        emit CollectionUpdated(id, collection);
     }
 
     function setMinter(
         address minter,
         bool enabled
         )
-        public
+        external
         onlyOwner
     {
         if (enabled) {
             addAddressToSet(MINTERS, minter, true);
+            if (isAddressInSet(DEPRECATED_MINTERS, minter)) {
+                removeAddressFromSet(DEPRECATED_MINTERS, minter);
+            }
         } else {
             removeAddressFromSet(MINTERS, minter);
+            addAddressToSet(DEPRECATED_MINTERS, minter, true);
         }
     }
 
@@ -129,6 +149,6 @@ contract CuriousWeasels is ERC1155, Ownable, IL2MintableNFT, AddressSet
         view
         returns (bool)
     {
-        return isAddressInSet(MINTERS, addr);
+        return isAddressInSet(MINTERS, addr) || isAddressInSet(DEPRECATED_MINTERS, addr);
     }
 }

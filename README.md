@@ -1,4 +1,4 @@
-# CuriousWeasels
+# MoodyApesNFT
 
 Codename for the Moody Apes.
 
