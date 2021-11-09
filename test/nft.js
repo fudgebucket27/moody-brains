@@ -39,7 +39,7 @@ contract("NFT", (accounts) => {
   };
 
   const getUri = (tokenId, baseLevel, relativeLevel) => {
-    return baseTokenURI + "/" + new BigNumber(tokenId, 16).toString(10) + "_" + baseLevel + "_" + relativeLevel + "/metadata.json";
+    return baseTokenURI + "/" + new BigNumber(tokenId, 16).toString(10) + "/" + baseLevel + "_" + relativeLevel + "/metadata.json";
   };
 
   before(async () => {

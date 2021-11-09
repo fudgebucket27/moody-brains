@@ -77,7 +77,7 @@ contract Collection/* is ICollection*/
                 baseTokenURI,
                 "/",
                 tokenId.toString(),
-                "_",
+                "/",
                 baseLevel.toString(),
                 "_",
                 relativeLevel.toString(),
