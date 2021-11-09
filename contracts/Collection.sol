@@ -24,30 +24,33 @@ contract Collection/* is ICollection*/
     using Strings for uint;
     using OracleLibrary for address;
 
-    uint32 public constant CURRENT_PRICE_SECONDS_AGO = 5 minutes;
+    uint32 public constant CURRENT_PRICE_SECONDS_AGO  = 5  minutes;
     uint32 public constant PREVIOUS_PRICE_SECONDS_AGO = 12 hours;
 
     IUniswapV3Pool immutable public uniswapPool;
-    uint32  immutable public /*override*/ collectionID;
+    uint128 immutable public /*override*/ collectionID;
     uint128 immutable public baseAmount;
-    string public baseTokenURI;
+    uint256 immutable public basePrice;
+    string            public ipfsHash;
 
     int[] public priceLevels;
     int[] public relativeLevels;
 
     constructor(
-        uint32         _collectionID,
-        string  memory _baseTokenURI,
+        uint128        _collectionID,
+        string  memory _ipfsHash,
         IUniswapV3Pool _uniswapPool,
         uint128        _baseAmount,
+        uint256        _basePrice,
         int[]   memory _priceLevels,
         int[]   memory _relativeLevels
         )
     {
         collectionID = _collectionID;
-        baseTokenURI = _baseTokenURI;
+        ipfsHash = _ipfsHash;
         uniswapPool = _uniswapPool;
         baseAmount = _baseAmount;
+        basePrice = _basePrice;
         priceLevels = _priceLevels;
         relativeLevels = _relativeLevels;
     }
@@ -59,12 +62,9 @@ contract Collection/* is ICollection*/
         returns (string memory)
     {
         // Data format:
-        // -  4 bytes: collection ID
-        // - 16 bytes: base price
-        // - 12 bytes: id
-        require(uint32((tokenId >> 224) & 0xFFFFFFFF) == collectionID, "inconsistent collection id");
-
-        uint basePrice = (tokenId >> 96) & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
+        // - 16 bytes: collection ID
+        // - 16 bytes: nft ID
+        require(uint128(tokenId >> 128) == collectionID, "inconsistent collection id");
 
         uint currentPrice = getPrice(CURRENT_PRICE_SECONDS_AGO);
         uint previousPrice = getPrice(PREVIOUS_PRICE_SECONDS_AGO);
@@ -74,6 +74,7 @@ contract Collection/* is ICollection*/
 
         return string(
             abi.encodePacked(
+                "ipfs://""
                 baseTokenURI,
                 "/",
                 tokenId.toString(),
