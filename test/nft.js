@@ -1,5 +1,6 @@
 const truffleAssert = require('truffle-assertions');
 var assert = require('assert');
+const BigNumber = require('bignumber.js');
 
 const NftContract = artifacts.require("MoodyApesNFT.sol");
 const Collection = artifacts.require("Collection.sol");
@@ -12,6 +13,7 @@ contract("NFT", (accounts) => {
   const userA = accounts[3];
   const userB = accounts[4];
 
+  const collectionID = 1;
   const baseTokenURI = "ipfs://QmZahwjzcxb5a3wuTRQfj6MRXHWGgZM7HXbGKm7xiV3YFv";
 
   let nft;
@@ -36,8 +38,8 @@ contract("NFT", (accounts) => {
       id.toString(16).padStart(24, "0");
   };
 
-  const getUri = (id, basePrice, baseLevel, relativeLevel) => {
-    return baseTokenURI + "/" + id + "/" + basePrice + "/" + baseLevel + "/" + relativeLevel + "/metadata.json";
+  const getUri = (tokenId, baseLevel, relativeLevel) => {
+    return baseTokenURI + "/" + new BigNumber(tokenId, 16).toString(10) + "_" + baseLevel + "_" + relativeLevel + "/metadata.json";
   };
 
   before(async () => {
@@ -49,6 +51,7 @@ contract("NFT", (accounts) => {
     const priceLevels = [10000000000];
     const relativeLevels = [-20, 20];
     ethCollection = await Collection.new(
+      collectionID,
       baseTokenURI,
       uniswapPool.address,
       baseAmount,
@@ -57,14 +60,14 @@ contract("NFT", (accounts) => {
       {from: owner}
     );
 
-    await nft.setCollection(1, ethCollection.address, {from: owner});
+    await nft.addCollection(ethCollection.address, {from: owner});
   });
 
   it("mint", async () => {
     await nft.setMinter(minterA, true, {from: owner});
 
     // Mint an NFT
-    const collectionID = 1;
+
     const basePrice = 0;
     const id = 123;
     const tokenId = getTokenId(collectionID, basePrice, id);
@@ -76,21 +79,21 @@ contract("NFT", (accounts) => {
       ["3154878136729","3154820433529","3146567560795"],
       ["0","0","0"]
     );
-    assert.equal(await nft.uri(tokenId), getUri(id, basePrice, 0, 1), "unexpected uri");
+    assert.equal(await nft.uri(tokenId), getUri(tokenId, 0, 1), "unexpected uri");
 
     // Price increated by more than +20%
     await setOraclePrices(
       ["3154878136729","3154820433529","3146467560795"],
       ["0","0","0"]
     );
-    assert.equal(await nft.uri(tokenId), getUri(id, basePrice, 0, 2), "unexpected uri");
+    assert.equal(await nft.uri(tokenId), getUri(tokenId, 0, 2), "unexpected uri");
 
     // Price decreased by more than -20%
     await setOraclePrices(
       ["3154878136729","3154820433529","3146657560795"],
       ["0","0","0"]
     );
-    assert.equal(await nft.uri(tokenId), getUri(id, basePrice, 0, 0), "unexpected uri");
+    assert.equal(await nft.uri(tokenId), getUri(tokenId, 0, 0), "unexpected uri");
 
     // Try to mint from an unauthorized addresss
     truffleAssert.fails(
