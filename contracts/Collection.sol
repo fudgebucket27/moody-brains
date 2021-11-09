@@ -61,9 +61,7 @@ contract Collection/* is ICollection*/
         view
         returns (string memory)
     {
-        // Data format:
-        // - 16 bytes: collection ID
-        // - 16 bytes: nft ID
+        // The leading 16 bytes must be the collection ID
         require(uint128(tokenId >> 128) == collectionID, "inconsistent collection id");
 
         uint currentPrice = getPrice(CURRENT_PRICE_SECONDS_AGO);
