@@ -61,7 +61,7 @@ contract Collection/* is ICollection*/
         view
         returns (string memory)
     {
-        // The leading 16 bytes must be the collection ID
+        // The leading 16 bytes must be the colleciton ID
         require(uint128(tokenId >> 128) == collectionID, "inconsistent collection id");
 
         uint currentPrice = getPrice(CURRENT_PRICE_SECONDS_AGO);
