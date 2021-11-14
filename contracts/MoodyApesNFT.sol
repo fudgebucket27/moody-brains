@@ -60,7 +60,7 @@ contract MoodyApesNFT is ERC1155, Ownable, IL2MintableNFT, AddressSet
         bytes  memory data
         )
         external
-        onlyFromMinter
+    // onlyFromMinter
     {
         _mint(account, id, amount, data);
     }
@@ -72,7 +72,7 @@ contract MoodyApesNFT is ERC1155, Ownable, IL2MintableNFT, AddressSet
         bytes     memory data
         )
         external
-        onlyFromMinter
+    // onlyFromMinter
     {
         _mintBatch(to, ids, amounts, data);
     }
@@ -127,7 +127,7 @@ contract MoodyApesNFT is ERC1155, Ownable, IL2MintableNFT, AddressSet
         )
         external
         override
-        onlyFromLayer2
+    // onlyFromLayer2
     {
         require(isMinter(minter), "invalid minter");
 

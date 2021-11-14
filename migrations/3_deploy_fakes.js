@@ -3,20 +3,17 @@ const FakeCollection = artifacts.require("./FakeCollection.sol");
 module.exports = async (deployer, network, addresses) => {
   console.log("Deploying to " + network);
 
-  const loopringExchangeAddress = "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4";
-
-  let owner;
-  if (network === 'rinkeby') {
-    owner = addresses[0];
-  } else if (network === 'development') {
-    owner = addresses[0];
-  } else {
-    owner = addresses[0];
-  }
-
-  await deployer.deploy(NftContract, loopringExchangeAddress, {gas: 5000000});
-  const nft = await NftContract.deployed();
-  await nft.transferOwnership(owner);
-
-  console.log("NFT contract: " + nft.address);
+  const collectionID = 1;
+  const baseURI = "http://moody-static.s3-website.us-east-2.amazonaws.com";
+  const priceLevels = [-10, 0, 10];
+  const relativeLevels = [-20, 0, 20];
+  await deployer.deploy(
+    FakeCollection,
+    collectionID,
+    baseURI,
+    priceLevels,
+    relativeLevels,
+    {gas: 5000000}
+  );
+  console.log("FakeCollection contract: " + FakeCollection.address);
 };

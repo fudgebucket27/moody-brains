@@ -2,7 +2,8 @@
 
 pragma solidity 0.7.6;
 
-import "./external/Strings.sol";
+import "../external/Strings.sol";
+import '@uniswap/v3-periphery/contracts/libraries/OracleLibrary.sol';
 
 /**
  * @title Collection
@@ -24,7 +25,6 @@ contract FakeCollection/* is ICollection*/
     uint32 public constant PREVIOUS_PRICE_SECONDS_AGO = 12 hours;
 
     uint32  immutable public /*override*/ collectionID;
-    uint128 immutable public baseAmount;
     string public baseTokenURI;
 
     int[] public priceLevels;
@@ -33,14 +33,12 @@ contract FakeCollection/* is ICollection*/
     constructor(
         uint32         _collectionID,
         string  memory _baseTokenURI,
-        uint128        _baseAmount,
         int[]   memory _priceLevels,
         int[]   memory _relativeLevels
         )
     {
         collectionID = _collectionID;
         baseTokenURI = _baseTokenURI;
-        baseAmount = _baseAmount;
         priceLevels = _priceLevels;
         relativeLevels = _relativeLevels;
     }
