@@ -1,4 +1,5 @@
 const HDWalletProvider = require("truffle-hdwallet-provider");
+const PrivateKeyProvider = require("truffle-privatekey-provider");
 
 const MNEMONIC = process.env.MNEMONIC;
 const NODE_API_KEY = process.env.INFURA_KEY || process.env.ALCHEMY_KEY;
@@ -22,12 +23,14 @@ let mainnetNodeUrl = isInfura
   ? "https://mainnet.infura.io/v3/" + NODE_API_KEY
   : "https://eth-mainnet.alchemyapi.io/v2/" + NODE_API_KEY;
 
+const goerliNodeUrl = "https://goerli.infura.io/v3/b7c22d73c16e4c0ea3f88dadbdffbe03"
+
 
 module.exports = {
   networks: {
     development: {
       host: "localhost",
-      port: 7545,
+      port: 8545,
       gas: 5000000,
       network_id: "*", // Match any network id
     },
@@ -37,6 +40,17 @@ module.exports = {
       },
       gas: 5000000,
       network_id: 4,
+      gasPrice: 5000000000, // 5 gwei
+    },
+    goerli: {
+      provider: function () {
+        return new PrivateKeyProvider(
+          "7c71142c72a019568cf848ac7b805d21f2e0fd8bc341e8314580de11c6a397bf",
+          "https://goerli.infura.io/v3/b7c22d73c16e4c0ea3f88dadbdffbe03"
+        );
+      },
+      gas: 5000000,
+      network_id: 5,
       gasPrice: 5000000000, // 5 gwei
     },
     live: {
