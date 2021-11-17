@@ -36,6 +36,7 @@
     "yarn": "~1.22.4"
   },
   "devDependencies": {
+    "bignumber.js": "^9.0.1",
     "canvas": "^2.8.0",
     "eslint": "^7.22.0",
     "ganache-cli": "6.9.1",
