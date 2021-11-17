@@ -9,7 +9,7 @@ async function doMerge20211116() {
     for (const bg of bgs) {
         for (const mood of moods) {
             console.log("generate image with:", bg, mood)
-            const b64 = await mergeImages([
+            let b64 = await mergeImages([
                 "scripts/nft-materials/version20211116/bg/" + bg + ".png",
                 "scripts/nft-materials/version20211116/hat/baseball.png",
                 "scripts/nft-materials/version20211116/face/face.png",
@@ -21,7 +21,9 @@ async function doMerge20211116() {
             });
 
             console.log("b64:", b64);
-            fs.writeFileSync("scripts/nft-materials/version20211116/result/" + bg + "-" + mood + ".png", b64);
+            b64 = b64.replace(/^data:image\/png;base64,/, "");
+            const resFile = "scripts/nft-materials/version20211116/result/" + bg + "-" + mood + ".png";
+            fs.writeFileSync(resFile, b64, "base64");
         }
     }
 }
