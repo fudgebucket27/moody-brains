@@ -31,7 +31,7 @@ async function doMerge20211116() {
             console.log("b64:", b64);
             b64 = b64.replace(/^data:image\/png;base64,/, "");
 
-            const imageBaseDir = "collections/moody-brains-1118/" + tokenDir + "/images/";
+            const imageBaseDir = "collections/moody-brains-1118/images/" + tokenDir + "/";
             // const resDir =  "collections/moody-brains-1118/" + tokenDir + "/" + i + "_" + j + "/";
             fs.mkdirSync(imageBaseDir, { recursive: true });
 
