@@ -1,6 +1,6 @@
-# MoodyApesNFT
+# MoodyBrainsNFT
 
-Codename for the Moody Apes.
+Codename for the Moody Brains.
 
 ## Build instructions
 
