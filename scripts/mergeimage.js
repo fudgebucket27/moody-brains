@@ -31,11 +31,11 @@ async function doMerge20211116() {
             console.log("b64:", b64);
             b64 = b64.replace(/^data:image\/png;base64,/, "");
 
-            const imageBaseDir = "collections/moody-brains-1118/images/";
+            const imageBaseDir = "collections/moody-brains-1118/" + tokenDir + "/images/";
             // const resDir =  "collections/moody-brains-1118/" + tokenDir + "/" + i + "_" + j + "/";
             fs.mkdirSync(imageBaseDir, { recursive: true });
 
-            const imageFile = bg + "-" + mood + ".png";
+            const imageFile = i + "_" + j + ".png";
             fs.writeFileSync(imageBaseDir + imageFile, b64, "base64");
 
             // const metadata = {
