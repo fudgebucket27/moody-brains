@@ -3,7 +3,25 @@ const mergeImages = require('merge-images');
 const { Canvas, Image } = require('canvas');
 const { BigNumber } = require("bignumber.js");
 
-async function doMerge20211116() {
+function generateMetadata20111118() {
+    const tokenId = calculateTokenId("4", "1");
+    const imageIpfsBase = "QmRZ7EAJkmJMKdN19gpgM6Nk6jKNonxu6JjRJfUGrskjk8";
+    const metadataBaseDir = "collections/moody-brains-1118/metadata/" + tokenId + "/";
+
+    for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 3; j++) {
+            const metadata = {
+                name: "Collection#20211118",
+                image: "ipfs://" + imageIpfsBase + "/" + tokenId + "/" + i + "_" + j + ".png"
+            };
+            const metadataDir = metadataBaseDir + i + "_" + j + "/";
+            fs.mkdirSync(metadataDir, { recursive: true });
+            fs.writeFileSync(metadataDir + "metadata.json", JSON.stringify(metadata, undefined, 2));
+        }
+    }
+}
+
+async function doMerge20211118() {
     const bgs = ["poor", "rich"];
     const moods = ["normal", "sad", "happy"];
 
@@ -58,7 +76,8 @@ function calculateTokenId(collectionId, tokenId) {
 }
 
 async function main() {
-    await doMerge20211116();
+    // await doMerge20211116();
+    generateMetadata20111118();
 }
 
 main()
