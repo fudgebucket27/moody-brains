@@ -1,4 +1,4 @@
-const NftContract = artifacts.require("./MoodyApesNFT.sol");
+const NftContract = artifacts.require("./MoodyBrainsNFT.sol");
 
 module.exports = async (deployer, network, addresses) => {
   console.log("Deploying to " + network);

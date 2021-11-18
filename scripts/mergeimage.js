@@ -7,7 +7,7 @@ async function doMerge20211116() {
     const bgs = ["poor", "rich"];
     const moods = ["normal", "sad", "happy"];
 
-    const collectionId = "3";
+    const collectionId = "4";
     const tokenId = "1";
     const tokenDir = calculateTokenId(collectionId, tokenId);
 
@@ -31,17 +31,18 @@ async function doMerge20211116() {
             console.log("b64:", b64);
             b64 = b64.replace(/^data:image\/png;base64,/, "");
 
-            const resDir =  "scripts/nft-materials/version20211116/" + tokenDir + "/" + i + "_" + j + "/";
-            fs.mkdirSync(resDir, { recursive: true });
+            const imageBaseDir = "collections/moody-brains-1118/images/";
+            // const resDir =  "collections/moody-brains-1118/" + tokenDir + "/" + i + "_" + j + "/";
+            fs.mkdirSync(imageBaseDir, { recursive: true });
 
             const imageFile = bg + "-" + mood + ".png";
-            fs.writeFileSync(resDir + imageFile, b64, "base64");
+            fs.writeFileSync(imageBaseDir + imageFile, b64, "base64");
 
-            const metadata = {
-                name: "" + i + "_" + j,
-                image: imageFile
-            };
-            fs.writeFileSync(resDir + "metadata.json", JSON.stringify(metadata, undefined, 2));
+            // const metadata = {
+            //     name: "" + i + "_" + j,
+            //     image: imageFile
+            // };
+            // fs.writeFileSync(resDir + "metadata.json", JSON.stringify(metadata, undefined, 2));
         }
     }
 }
