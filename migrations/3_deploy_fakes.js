@@ -5,9 +5,9 @@ const NftContract = artifacts.require("./MoodyBrainsNFT.sol");
 module.exports = async (deployer, network, addresses) => {
   console.log("Deploying to " + network);
 
-  const collectionID = 3;
+  const collectionID = 4;
   // const baseURI = "http://moody-static.s3-website.us-east-2.amazonaws.com";
-  const baseURI = "/ipfs/QmaCks5r5gmN4W1PEUF3pjYxy11qfjNX8r4ufXCNY5zTqQ";
+  const baseURI = "ipfs://bafybeih6yronhzyybh3vuny4l2z6krvd2nubpe3kafy4n2hx4xn7yig7rm";
   const priceLevels = [-1, 50];
   const relativeLevels = [-20, 0, 20];
   // await deployer.deploy(
@@ -30,6 +30,6 @@ module.exports = async (deployer, network, addresses) => {
   );
   console.log("RandomCollection contract: " + RandomCollection.address);
 
-  const nftContract = await NftContract.deployed();
-  await nftContract.addCollection(RandomCollection.address);
+  // const nftContract = await NftContract.deployed();
+  // await nftContract.addCollection(RandomCollection.address);
 };

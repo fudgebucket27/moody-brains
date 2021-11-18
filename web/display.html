@@ -42,7 +42,11 @@
         )
       );
       console.log("web3: ", web3);
-      const ipfsGateway = "https://ipfs.io/";
+      const ipfsGateway = "https://ipfs.nft.gstop-sandbox.com/ipfs/";
+
+      function ipfsUriToHttpUri(ipfsUri) {
+        return ipfsGateway + ipfsUri.substring("ipfs://".length);
+      }
 
       // functions:
       function readMetadata(url) {
@@ -51,17 +55,15 @@
           .then( t => {
             $("#metadata-content").val(t);
 
-            loadImage(url, t);
+            loadImage(t);
           });
       }
 
-      function loadImage(url, metaData) {
+      function loadImage( metaData) {
         const meta = JSON.parse(metaData);
         console.log("meta:", meta);
-        const _pos = url.lastIndexOf("/");
-        const baseUrl = url.substring(0, _pos + 1);
 
-        $("#nft-img").attr("src", baseUrl + meta.image);
+        $("#nft-img").attr("src", ipfsUriToHttpUri(meta.image));
         $("#nft-img").attr("alt", meta.description);
       }
 
@@ -88,8 +90,8 @@
         }];
 
         const address = "0x677b26373e125d8b68F2f33f23A2027e7881c3B9";
-        // tokenID = 3 << 224 + 1
-        const tokenID = "80879840001451919384001045261058892020911433267621717443310830747649";
+        // tokenID = 4 << 224 + 1
+        const tokenID = "107839786668602559178668060348078522694548577690162289924414440996865";
 
         $("#nft-contract-address").html(address);
         $("#tokenId").html(tokenID);
@@ -98,7 +100,8 @@
         contract.methods.uri(tokenID).call().then(function(res) {
           console.log("res:", res);
           $("#metadata-uri").val(res);
-          readMetadata(ipfsGateway + res);
+          const metadataUri = ipfsUriToHttpUri(res)
+          readMetadata(metadataUri);
         });
       }
 
