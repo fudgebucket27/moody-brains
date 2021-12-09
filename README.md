@@ -9,3 +9,8 @@ yarn install
 yarn compile
 yarn test
 ```
+
+## merge images:
+```
+node scripts/mergeimage.js
+```
