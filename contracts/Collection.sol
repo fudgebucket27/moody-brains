@@ -134,6 +134,6 @@ contract Collection/* is ICollection*/
                 return i;
             }
         }
-        return levels.length;
+        return levels.length + 1;
     }
 }
