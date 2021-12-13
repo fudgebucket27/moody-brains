@@ -57,7 +57,7 @@ async function doMerge20211116() {
   }
 }
 
-async function doMerge20211209() {
+export async function doMerge20211209() {
   const personDir = "nfts-raw/nft-first-batch/person";
   const bgDir = "nfts-raw/nft-first-batch/bg";
   const headDir = "nfts-raw/nft-first-batch/head";
@@ -105,10 +105,10 @@ async function doMerge20211209() {
   }
 }
 
-async function main() {
-  await doMerge20211209();
-}
+// async function main() {
+//   await doMerge20211209();
+// }
 
-main()
-  .then(() => process.exit(0))
-  .catch(err => { console.error(err); process.exit(1) })
+// main()
+//   .then(() => process.exit(0))
+//   .catch(err => { console.error(err); process.exit(1) })
