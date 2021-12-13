@@ -1,6 +1,7 @@
 {
   "name": "curious-weasels-nfts",
   "version": "1.0.0",
+  "type": "module",
   "description": "MoodyApesNFT smart contracts.",
   "main": "index.js",
   "scripts": {
