@@ -7,9 +7,9 @@ module.exports = async (deployer, network, addresses) => {
 
   const collectionID = 1;
   // const baseURI = "http://moody-static.s3-website.us-east-2.amazonaws.com";
-  const baseURI = "ipfs://QmYmU4g2Sgz4Lcd9U5BxyYkMDJeTcEPc7Pa9jouNU6XSmW";
-  const priceLevels = [-25, -10, 0, 10, 25];
-  const relativeLevels = [-25, -10, 0, 10, 25];
+  const baseURI = "ipfs://QmQpyMjEy8ZQjaNWZrC4CQJQidfS2iWASUr6PAZY9CGTkf";
+  const priceLevels = [-25, -10, 10, 25];
+  const relativeLevels = [-25, -10, 10, 25];
   // await deployer.deploy(
   //   FakeCollection,
   //   collectionID,
