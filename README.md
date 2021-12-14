@@ -12,5 +12,5 @@ yarn test
 
 ## merge images:
 ```
-node scripts/mergeimage.js
+node scripts/main.mjs
 ```
