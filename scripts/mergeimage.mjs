@@ -30,7 +30,7 @@ async function doMerge20211116() {
     for (let j = 0; j < moods.length; j++) {
       const bg = bgs[i];
       const mood = moods[j];
-      console.log("generate image with:", bg, mood)
+      console.log("generate image with:", bg, mood);
 
       let b64 = await mergeImages([
         "scripts/nft-materials/version20211116/bg/" + bg + ".png",
@@ -82,13 +82,13 @@ async function doMergeCollection1() {
     id: 1,
     name: collectionName,
     imageDir: process.cwd() + "/" + baseDir,
-    baseLevels: [-25, -10, 0, 10, 25],
-    relativeLevels: [-25, -10, 0, 10, 25],
+    baseLevels: [-25, -10, 10, 25],
+    relativeLevels: [-25, -10, 10, 25],
     tokens: []
   };
 
-  assert(collectionInfo.baseLevels.length == bgs.length, "base levels size not equal");
-  assert(collectionInfo.relativeLevels.length == heads.length, "relative levels size not equal");
+  assert(collectionInfo.baseLevels.length + 1 == bgs.length, "base levels size not equal");
+  assert(collectionInfo.relativeLevels.length + 1 == heads.length, "relative levels size not equal");
 
   let tokenId = 0;
   for (const person of persons) {
@@ -96,7 +96,11 @@ async function doMergeCollection1() {
     // console.log(person);
     for (const [i, bg] of bgs.entries()) {
       for (const [j, head] of heads.entries()) {
-        // console.log(person, bg, head);
+        console.log([
+          personDir + "/" + person,
+          bgDir + "/" + bg,
+          headDir + "/" + head,
+        ]);
         let b64 = await mergeImages([
           personDir + "/" + person,
           bgDir + "/" + bg,
