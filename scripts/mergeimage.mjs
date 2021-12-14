@@ -102,8 +102,8 @@ async function doMergeCollection1() {
           headDir + "/" + head,
         ]);
         let b64 = await mergeImages([
-          personDir + "/" + person,
           bgDir + "/" + bg,
+          personDir + "/" + person,
           headDir + "/" + head,
         ], {
           Canvas: Canvas,
