@@ -1,13 +1,17 @@
-const fs = require("fs");
-const mergeImages = require('merge-images');
-const { Canvas, Image } = require('canvas');
-const { BigNumber } = require("bignumber.js");
-const assert = require("assert");
+import fs from "fs";
+import mergeImages from 'merge-images';
+import canvasPkg from 'canvas';
+const { Canvas, Image } = canvasPkg;
+import BigNumber from "bignumber.js";
+import assert from "assert";
 
-export function calculateTokenId(collectionId, tokenId) {
-  const pad1 = 8 - collectionId.length;
-  const pad2 = 56 - tokenId.length;
-  const hexStr = "0".repeat(pad1) + collectionId + "0".repeat(pad2) + tokenId;
+function calculateTokenId(collectionId, tokenId) {
+  const collectionIdHexStr = new BigNumber(collectionId).toString(16);
+  const tokenIdHexStr = new BigNumber(tokenId).toString(16);  
+
+  const pad1 = 8 - collectionIdHexStr.length;
+  const pad2 = 56 - tokenIdHexStr.length;
+  const hexStr = "0".repeat(pad1) + collectionIdHexStr + "0".repeat(pad2) + tokenIdHexStr;
   const bn = new BigNumber(hexStr, 16);
   return bn.toString(10);
 }
@@ -58,33 +62,40 @@ async function doMerge20211116() {
   }
 }
 
-export async function doMergeCollection1() {
-  const personDir = "nfts-raw/nft-first-batch/person";
-  const bgDir = "nfts-raw/nft-first-batch/bg";
-  const headDir = "nfts-raw/nft-first-batch/head";
+async function doMergeCollection1() {
+  const personDir = "nfts-raw/V20211213/person";
+  const bgDir = "nfts-raw/V20211213/bg";
+  const headDir = "nfts-raw/V20211213/head";
 
-  const persons = fs.readdirSync(personDir);
+  let persons = fs.readdirSync(personDir);
   const bgs = fs.readdirSync(bgDir);
   const heads = fs.readdirSync(headDir);
-  console.log("bgs:", bgs);
-  console.log("heads:", heads);
+  // console.log("bgs:", bgs);
+  // console.log("heads:", heads);
+
+  persons = persons.slice(0, 2);
+  console.log("persons:", persons);
 
   const collectionName = "collection_1";
+  const baseDir = "collections/" + collectionName + "/images/";
   const collectionInfo = {
     id: 1,
     name: collectionName,
+    imageDir: process.cwd() + "/" + baseDir,
     baseLevels: [-25, -10, 0, 10, 25],
     relativeLevels: [-25, -10, 0, 10, 25],
     tokens: []
   };
-  assert(collectionInfo.baseLevels.length == bgDir.length, "base levels size not equal");
-  assert(collectionInfo.relativeLevels.length == headDir.length, "relative levels size not equal");
+
+  assert(collectionInfo.baseLevels.length == bgs.length, "base levels size not equal");
+  assert(collectionInfo.relativeLevels.length == heads.length, "relative levels size not equal");
 
   let tokenId = 0;
   for (const person of persons) {
+    tokenId ++;
     // console.log(person);
-    for ([i, bg] of bgs.entries()) {
-      for ([j,head] of heads.entries()) {
+    for (const [i, bg] of bgs.entries()) {
+      for (const [j, head] of heads.entries()) {
         console.log(person, bg, head);
         let b64 = await mergeImages([
           personDir + "/" + person,
@@ -98,21 +109,25 @@ export async function doMergeCollection1() {
         // console.log("b64:", b64);
         b64 = b64.replace(/^data:image\/png;base64,/, "");
 
+        // console.log("b64.length:", b64.length);
+
         const basename = person.replace(/\.[^/.]+$/, "");
-        console.log("basename", basename);
+        // console.log("basename", basename);
         const [tokenName, gender] = basename.split("-");
-        const baseDir = "./collections/" + collectionName + "/images/";
+        
         fs.mkdirSync(baseDir, { recursive: true });
 
         const imageFile = tokenName + "_" + i + "_" + j + ".png";
         fs.writeFileSync(baseDir + imageFile, b64, "base64");
 
         const tokenInfo = {
-          id: tokenId ++,
+          id: tokenId,
           name: tokenName,
+          imageSize: Math.ceil(b64.length * 3 / 4),
           gender
         };
 
+        // console.log("tokenInfo:", tokenInfo);
         collectionInfo.tokens.push(tokenInfo);
       }
     }
@@ -124,3 +139,5 @@ export async function doMergeCollection1() {
   );
   return collectionInfo;
 }
+
+export { calculateTokenId, doMergeCollection1 };

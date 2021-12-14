@@ -1,16 +1,17 @@
-import { doMergeCollection1 } from "./mergeimage";
-import { pinDir } from "./pinToIpfs";
-import { genMetadatasForCollection } from "./metadata";
+import { doMergeCollection1 } from "./mergeimage.js";
+import { pinDir } from "./pinToIpfs.js";
+import { genMetadatasForCollection } from "./metadata.js";
 
 async function main() {
   const collectionInfo = await doMergeCollection1();
-  // const imagePinResult = await pinDir(baseDir, name); // pin Images to IPFS
-  // console.log("imagePinResult:", imagePinResult);
-  const imagePath = "/ipfs/12345xxxxx"; // + imagePinResult.IpfsHash;
+  console.log(collectionInfo);
+  const imagePinResult = await pinDir(collectionInfo.imageDir, "images of " + collectionInfo.name); // pin Images to IPFS
+  console.log("imagePinResult:", imagePinResult);
+  const imagePath = "/ipfs/" + imagePinResult.IpfsHash + "/";
   const metadataDir = genMetadatasForCollection(collectionInfo, imagePath);
   console.log("metadataDir:", metadataDir);
-  // const metadataPinResult = await pinDir(metadataDir, "metadata of" + collectionInfo.name);
-  // console.log("metadataPinResult:", metadataPinResult);
+  const metadataPinResult = await pinDir(metadataDir, "metadata of " + collectionInfo.name);
+  console.log("metadataPinResult:", metadataPinResult);
 }
 
 main()

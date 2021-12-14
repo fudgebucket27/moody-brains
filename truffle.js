@@ -42,6 +42,7 @@ module.exports = {
       network_id: 4,
       gasPrice: 5000000000, // 5 gwei
     },
+    
     goerli: {
       provider: function () {
         return new PrivateKeyProvider(
