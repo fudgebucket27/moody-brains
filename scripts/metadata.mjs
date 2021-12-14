@@ -32,8 +32,8 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
             "price_level": i,
             "price_relative_levels": collectionInfo.relativeLevels, // relativeLevels
             "price_relative_level": j,
-            "image_width": "120px",
-            "image_height": "120px",
+            "image_width": "1251px",
+            "image_height": "1251px",
             "image_weight": tokenInfo.imageSize, //文件大小
             "designer": "Chong Zhang <zhangchong@loopring.io>",
             "gender": `${tokenInfo.gender}`,

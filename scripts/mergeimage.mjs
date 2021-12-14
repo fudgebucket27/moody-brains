@@ -73,7 +73,7 @@ async function doMergeCollection1() {
   // console.log("bgs:", bgs);
   // console.log("heads:", heads);
 
-  persons = persons.slice(0, 2);
+  persons = persons.slice(0, 1);
   console.log("persons:", persons);
 
   const collectionName = "collection_1";
