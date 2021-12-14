@@ -1,7 +1,10 @@
 ## goerli
 
+### 20211116
 ```
 - MoodyApesNFT: 0x677b26373e125d8b68F2f33f23A2027e7881c3B9
-- FakeCollection: 0xF1c57a76E66869Ad9b12cDF0d6336a71D6507e94
 - RandomCollection: 0x5fb98a29850ecF2F00bC68f0Cd3dB2A3413fB6fb
 ```
+
+### 20211214
+- RandomCollection: 0x256c7dB76aE980b049879CA5Bb684A4Cb3fdC858

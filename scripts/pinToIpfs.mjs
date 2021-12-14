@@ -11,6 +11,6 @@ export async function pinDir(sourcePath, name) {
     }
   };
   const result = await pinata.pinFromFS(sourcePath, options);
-  console.log(result);
+  // console.log(result);
   return result;
 }

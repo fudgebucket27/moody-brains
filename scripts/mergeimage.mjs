@@ -96,7 +96,7 @@ async function doMergeCollection1() {
     // console.log(person);
     for (const [i, bg] of bgs.entries()) {
       for (const [j, head] of heads.entries()) {
-        console.log(person, bg, head);
+        // console.log(person, bg, head);
         let b64 = await mergeImages([
           personDir + "/" + person,
           bgDir + "/" + bg,

@@ -1,4 +1,4 @@
-import { calculateTokenId } from "./mergeimage.js";
+import { calculateTokenId } from "./mergeimage.mjs";
 import fs from "fs";
 
 export function genMetadatasForCollection(collectionInfo, imagePath) {
@@ -20,7 +20,7 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
             "collection": "MoodyBrains#" + collectionId,
             "series": "MoodyBrains Loopheads",
             "standard": "ERC1155",
-            "contract_impl": "${the implementation contract address on mainnet}",
+            "contract_impl": "0x677b26373e125d8b68F2f33f23A2027e7881c3B9(goerli)",
             "contract_codebase": "https://github.com/Loopring/moody-brains",
             "counterfactual": false,
             "minted_by": "Loopring Technology Limited",
@@ -41,9 +41,7 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
           }
         }
 
-        console.log(collectionId, tokenInfo.id);
         const tokenId = calculateTokenId(collectionId, tokenInfo.id);
-        console.log("tokenId:", tokenId);
         const metadataDir = baseDir + tokenId + "/" + i + "_" + j + "/";
         fs.mkdirSync(metadataDir, { recursive: true });
         fs.writeFileSync(
