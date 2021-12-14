@@ -12,7 +12,7 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
       for (let j = 0; j < relativeLevelsLen; j++) {
         const imageUrl = imagePath + tokenInfo.name + "_" + i + "_" + j + ".png";
         const metadata = {
-          "name": `Loophead ${tokenInfo.name}`,
+          "name": `Loophead #${tokenInfo.id}`,
           "image": imageUrl,
           "description": "",
           "external_uri": "https://loopring.io",
