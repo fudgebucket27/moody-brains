@@ -73,7 +73,7 @@ async function doMergeCollection1() {
   // console.log("bgs:", bgs);
   // console.log("heads:", heads);
 
-  persons = persons.slice(0, 1);
+  //persons = persons.slice(0, 1);
   console.log("persons:", persons);
 
   const collectionName = "collection_1";
@@ -90,10 +90,16 @@ async function doMergeCollection1() {
   assert(collectionInfo.baseLevels.length + 1 == bgs.length, "base levels size not equal");
   assert(collectionInfo.relativeLevels.length + 1 == heads.length, "relative levels size not equal");
 
+  fs.mkdirSync(baseDir, { recursive: true });
+
   let tokenId = 0;
   for (const person of persons) {
     tokenId ++;
     // console.log(person);
+    const basename = person.replace(/\.[^/.]+$/, "");
+    // console.log("basename", basename);
+    const [tokenName, gender] = basename.split("-");
+    
     for (const [i, bg] of bgs.entries()) {
       for (const [j, head] of heads.entries()) {
         let b64 = await mergeImages([
@@ -108,14 +114,6 @@ async function doMergeCollection1() {
         // console.log("b64:", b64);
         b64 = b64.replace(/^data:image\/png;base64,/, "");
 
-        // console.log("b64.length:", b64.length);
-
-        const basename = person.replace(/\.[^/.]+$/, "");
-        // console.log("basename", basename);
-        const [tokenName, gender] = basename.split("-");
-        
-        fs.mkdirSync(baseDir, { recursive: true });
-
         const imageFile = tokenName + "_" + i + "_" + j + ".png";
         fs.writeFileSync(baseDir + imageFile, b64, "base64");
 
@@ -123,7 +121,9 @@ async function doMergeCollection1() {
           id: tokenId,
           name: tokenName,
           imageSize: Math.ceil(b64.length * 3 / 4),
-          gender
+          gender,
+          i,
+          j
         };
 
         // console.log("tokenInfo:", tokenInfo);
