@@ -31,7 +31,7 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
         },        
         {
           "trait_type": "Gender", 
-          "value": "Female"
+          "value": tokenInfo.gender
         },
         {
           "trait_type": "Creator", 
