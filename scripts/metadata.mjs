@@ -20,22 +20,26 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
     const imageUrl = imagePath + tokenInfo.name + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png";
     const metadata = {
       "name": `Loophead #${tokenInfo.id}`,
-      "description": `A collection of Moody Brains - Loophead #${tokenInfo.id}`,
+      "description": "A Loopring 'Moody Brains' NFT collection",
       "image": imageUrl,
       "external_uri": "https://loopring.io",
       "cache_expiry_seconds": 3600,
       "attributes": [
         {
-          "trait_type": "Ticker", 
+          "trait_type": "Ticker",
           "value": "LRC"
-        },        
+        },
         {
-          "trait_type": "Gender", 
+          "trait_type": "Gender",
           "value": tokenInfo.gender
         },
         {
-          "trait_type": "Creator", 
+          "trait_type": "Designer",
           "value": "Chong Zhang <zhangchong@loopring.io>"
+        },
+        {
+          "trait_type": "Minter",
+          "value": "Loopring"
         },
       ]
     };
