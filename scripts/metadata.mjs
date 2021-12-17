@@ -23,7 +23,7 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
       "description": "Loopheads is a Loopring 'Moody Brains' NFT collection",
       "image": imageUrl,
       "external_uri": "https://loopheads.world",
-      "cache_expiry_seconds": 3600,
+      "cache_expiry_seconds": 300,
       "attributes": [
         {
           "trait_type": "Ticker",
