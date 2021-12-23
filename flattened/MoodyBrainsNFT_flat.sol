@@ -1,8 +1,8 @@
+// SPDX-License-Identifier: Apache-2.0
+pragma solidity ^0.8.2;
 // File: @openzeppelin/contracts/utils/introspection/IERC165.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
 
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -27,9 +27,7 @@ interface IERC165 {
 
 // File: @openzeppelin/contracts/token/ERC1155/IERC1155.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
 
 
 /**
@@ -153,9 +151,7 @@ interface IERC1155 is IERC165 {
 
 // File: @openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
 
 
 /**
@@ -207,9 +203,7 @@ interface IERC1155Receiver is IERC165 {
 
 // File: @openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
 
 
 /**
@@ -230,9 +224,7 @@ interface IERC1155MetadataURI is IERC1155 {
 
 // File: @openzeppelin/contracts/utils/Address.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
 
 /**
  * @dev Collection of functions related to the address type
@@ -449,9 +441,7 @@ library Address {
 
 // File: @openzeppelin/contracts/utils/Context.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
 
 /**
  * @dev Provides information about the current execution context, including the
@@ -475,9 +465,7 @@ abstract contract Context {
 
 // File: @openzeppelin/contracts/utils/introspection/ERC165.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
 
 
 /**
@@ -505,9 +493,7 @@ abstract contract ERC165 is IERC165 {
 
 // File: @openzeppelin/contracts/token/ERC1155/ERC1155.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
 
 
 
@@ -958,9 +944,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
 
 // File: @openzeppelin/contracts/access/Ownable.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
 
 
 /**
@@ -1031,9 +1015,7 @@ abstract contract Ownable is Context {
 
 // File: contracts/AddressSet.sol
 
-// SPDX-License-Identifier: Apache-2.0
 // Copyright 2017 Loopring Technology Limited.
-pragma solidity ^0.8.2;
 
 
 /// @title AddressSet
@@ -1130,9 +1112,7 @@ contract AddressSet
 
 // File: contracts/external/IL2MintableNFT.sol
 
-// SPDX-License-Identifier: Apache-2.0
 // Copyright 2017 Loopring Technology Limited.
-pragma solidity ^0.8.2;
 
 
 interface IL2MintableNFT
@@ -1166,9 +1146,7 @@ interface IL2MintableNFT
 
 // File: contracts/ICollection.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.2;
 
 
 /**
@@ -1189,11 +1167,9 @@ abstract contract ICollection
         returns (string memory);
 }
 
-// File: contracts/MoodyBrainsNFT.sol
+// File: ../contracts/MoodyBrainsNFT.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.2;
 
 
 

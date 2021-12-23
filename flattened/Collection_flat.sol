@@ -1,9 +1,9 @@
+// SPDX-License-Identifier: Apache-2.0
+pragma solidity ^0.8.2;
 // File: contracts/external/Strings.sol
 
-// SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts v4.3.2 (utils/Strings.sol)
 
-pragma solidity 0.7.6;
 
 /**
  * @dev String operations.
@@ -70,8 +70,6 @@ library Strings {
 
 // File: @uniswap/v3-core/contracts/libraries/FullMath.sol
 
-// SPDX-License-Identifier: MIT
-pragma solidity >=0.4.0;
 
 /// @title Contains 512-bit math functions
 /// @notice Facilitates multiplication and division that can have overflow of an intermediate value without any loss of precision
@@ -197,8 +195,6 @@ library FullMath {
 
 // File: @uniswap/v3-core/contracts/libraries/TickMath.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0;
 
 /// @title Math library for computing sqrt prices from ticks and vice versa
 /// @notice Computes sqrt price for ticks of size 1.0001, i.e. sqrt(1.0001^tick) as fixed point Q64.96 numbers. Supports
@@ -405,8 +401,6 @@ library TickMath {
 
 // File: @uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolImmutables.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0;
 
 /// @title Pool state that never changes
 /// @notice These parameters are fixed for a pool forever, i.e., the methods will always return the same values
@@ -443,8 +437,6 @@ interface IUniswapV3PoolImmutables {
 
 // File: @uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolState.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0;
 
 /// @title Pool state that can change
 /// @notice These methods compose the pool's state, and can change with any frequency including multiple times
@@ -562,8 +554,6 @@ interface IUniswapV3PoolState {
 
 // File: @uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0;
 
 /// @title Pool state that is not stored
 /// @notice Contains view functions to provide information about the pool that is computed rather than stored on the
@@ -605,8 +595,6 @@ interface IUniswapV3PoolDerivedState {
 
 // File: @uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolActions.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0;
 
 /// @title Permissionless pool actions
 /// @notice Contains pool methods that can be called by anyone
@@ -711,8 +699,6 @@ interface IUniswapV3PoolActions {
 
 // File: @uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0;
 
 /// @title Permissioned pool actions
 /// @notice Contains pool methods that may only be called by the factory owner
@@ -737,8 +723,6 @@ interface IUniswapV3PoolOwnerActions {
 
 // File: @uniswap/v3-core/contracts/interfaces/pool/IUniswapV3PoolEvents.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0;
 
 /// @title Events emitted by a pool
 /// @notice Contains all events emitted by the pool
@@ -861,8 +845,6 @@ interface IUniswapV3PoolEvents {
 
 // File: @uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0;
 
 
 
@@ -887,8 +869,6 @@ interface IUniswapV3Pool is
 
 // File: @uniswap/v3-core/contracts/libraries/LowGasSafeMath.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.7.0;
 
 /// @title Optimized overflow and underflow safe math operations
 /// @notice Contains methods for doing math operations that revert on overflow or underflow for minimal gas cost
@@ -936,8 +916,6 @@ library LowGasSafeMath {
 
 // File: @uniswap/v3-periphery/contracts/libraries/PoolAddress.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0;
 
 /// @title Provides functions for deriving a pool address from the factory, tokens, and the fee
 library PoolAddress {
@@ -987,8 +965,6 @@ library PoolAddress {
 
 // File: @uniswap/v3-periphery/contracts/libraries/OracleLibrary.sol
 
-// SPDX-License-Identifier: GPL-2.0-or-later
-pragma solidity >=0.5.0 <0.8.0;
 
 
 
@@ -1066,11 +1042,9 @@ library OracleLibrary {
     }
 }
 
-// File: contracts/Collection.sol
+// File: ../contracts/Collection.sol
 
-// SPDX-License-Identifier: MIT
 
-pragma solidity 0.7.6;
 
 //import "./ICollection.sol";
 
