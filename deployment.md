@@ -1,3 +1,10 @@
+## Mainnet
+### 20211223
+```
+- MoodyBrainsNFT: 0x1cACC96e5F01e2849E6036F25531A9A064D2FB5f
+```
+
+
 ## goerli
 
 ### 20211116
