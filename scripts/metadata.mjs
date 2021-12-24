@@ -5,7 +5,7 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
   const collectionId = collectionInfo.id;
   const baseLevelsLen = collectionInfo.baseLevels.length;
   const relativeLevelsLen = collectionInfo.relativeLevels.length;
-  const nftContractAddress = "0x677b26373e125d8b68F2f33f23A2027e7881c3B9";
+  const nftContractAddress = "0x1cACC96e5F01e2849E6036F25531A9A064D2FB5f";
 
   const baseDir = process.cwd() + "/collections/" + collectionInfo.name + "/metadatas/";
   const result = {

@@ -63,9 +63,9 @@ async function doMerge20211116() {
 }
 
 async function doMergeCollection1() {
-  const personDir = "nfts-raw/V20211213/person";
-  const bgDir = "nfts-raw/V20211213/bg";
-  const headDir = "nfts-raw/V20211213/head";
+  const personDir = "nfts-raw/V20211224/100";
+  const bgDir = "nfts-raw/V20211224/bg";
+  const headDir = "nfts-raw/V20211224/head";
 
   let persons = fs.readdirSync(personDir);
   const bgs = fs.readdirSync(bgDir);
@@ -76,10 +76,10 @@ async function doMergeCollection1() {
   persons = persons.slice(0, 1);
   console.log("persons:", persons);
 
-  const collectionName = "collection_1";
+  const collectionName = "collection_20211224";
   const baseDir = "collections/" + collectionName + "/images/";
   const collectionInfo = {
-    id: 1,
+    id: 20211224,
     name: collectionName,
     imageDir: process.cwd() + "/" + baseDir,
     baseLevels: [-25, -10, 10, 25],
@@ -98,7 +98,11 @@ async function doMergeCollection1() {
     // console.log(person);
     const basename = person.replace(/\.[^/.]+$/, "");
     // console.log("basename", basename);
-    const [tokenName, gender] = basename.split("-");
+    let [tokenName, gender] = basename.split("-");
+    if (gender && gender == "female") {
+    } else {
+      gender = "male";
+    }
     
     for (const [i, bg] of bgs.entries()) {
       for (const [j, head] of heads.entries()) {
