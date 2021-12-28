@@ -143,4 +143,89 @@ async function doMergeCollection1() {
   return collectionInfo;
 }
 
-export { calculateTokenId, doMergeCollection1 };
+async function doMergeCollection20211224() {
+  const personDirs = [/*"100", "200", "300", "400", "500", "600",*/ "700", "800", "900", "1000"];
+  
+  const bgDir = "nfts-raw/V20211224/bg";
+  const headDir = "nfts-raw/V20211224/head";
+  const bgs = fs.readdirSync(bgDir);
+  const heads = fs.readdirSync(headDir);
+  
+  const collectionName = "collection_20211224";
+  const baseDir = "collections/" + collectionName + "/images/";
+  const collectionInfo = {
+    id: 20211224,
+    name: collectionName,
+    imageDir: process.cwd() + "/" + baseDir,
+    baseLevels: [-25, -10, 10, 25],
+    relativeLevels: [-25, -10, 10, 25],
+    tokens: []
+  };
+
+  assert(collectionInfo.baseLevels.length + 1 == bgs.length, "base levels size not equal");
+  assert(collectionInfo.relativeLevels.length + 1 == heads.length, "relative levels size not equal");
+
+  fs.mkdirSync(baseDir, { recursive: true });
+  
+  for(const imageDir of personDirs) {
+    
+    const personDir = "nfts-raw/V20211224/100";
+    let persons = fs.readdirSync(personDir);
+
+    // persons = persons.slice(0, 1);
+    console.log("imageDir:", imageDir);
+    console.log("persons:", persons);
+
+    let tokenId = 0;
+    for (const person of persons) {
+      tokenId ++;
+      // console.log(person);
+      const basename = person.replace(/\.[^/.]+$/, "");
+      // console.log("basename", basename);
+      let [tokenName, gender] = basename.split("-");
+      if (gender && gender == "female") {
+      } else {
+        gender = "male";
+      }
+      
+      for (const [i, bg] of bgs.entries()) {
+        for (const [j, head] of heads.entries()) {
+          let b64 = await mergeImages([
+            bgDir + "/" + bg,
+            personDir + "/" + person,
+            headDir + "/" + head,
+          ], {
+            Canvas: Canvas,
+            Image: Image
+          });
+
+          // console.log("b64:", b64);
+          b64 = b64.replace(/^data:image\/png;base64,/, "");
+
+          const imageFile = tokenName + "_" + imageDir + "_" + i + "_" + j + ".png";
+          fs.writeFileSync(baseDir + imageFile, b64, "base64");
+
+          const tokenInfo = {
+            id: tokenId,
+            name: tokenName,
+            imageSize: Math.ceil(b64.length * 3 / 4),
+            gender,
+            i,
+            j
+          };
+
+          // console.log("tokenInfo:", tokenInfo);
+          collectionInfo.tokens.push(tokenInfo);
+        }
+      }
+    }
+  }
+
+  fs.writeFileSync(
+    "./collections/" + collectionName + "/collectionInfo.json",
+    JSON.stringify(collectionInfo, undefined, 2)
+  );
+  return collectionInfo;
+}
+
+export { calculateTokenId, doMergeCollection1, doMergeCollection20211224 };
