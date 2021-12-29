@@ -29,10 +29,10 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
           "trait_type": "Ticker",
           "value": "LRC"
         },
-        {
-          "trait_type": "Gender",
-          "value": tokenInfo.gender
-        },
+        // {
+        //   "trait_type": "Gender",
+        //   "value": tokenInfo.gender
+        // },
         {
           "trait_type": "Designer",
           "value": "Chong Zhang <zhangchong@loopring.io>"
