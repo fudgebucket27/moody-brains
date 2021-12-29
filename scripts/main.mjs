@@ -1,9 +1,15 @@
 import { doMergeCollection1, doMergeCollection20211224 } from "./mergeimage.mjs";
 import { pinDir } from "./pinToIpfs.mjs";
 import { genMetadatasForCollection } from "./metadata.mjs";
+import { resizeAllImageInDir } from "./resize.mjs";
 
 async function main() {
-  const collectionInfo = await doMergeCollection20211224();
+  await resizeAllImageInDir(
+    "./collections/collection_20211224/images/",
+    "./collections/collection_20211224/images_small/"
+  );
+  
+  // const collectionInfo = await doMergeCollection20211224();
   // console.log(collectionInfo);
   // pin Images to IPFS
   // const imagePinResult = await pinDir(collectionInfo.imageDir, "images of " + collectionInfo.name);
