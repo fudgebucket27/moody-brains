@@ -143,15 +143,14 @@ async function doMergeCollection1() {
   return collectionInfo;
 }
 
-async function doMergeCollection20211224() {
-  const personDirs = [/*"100", "200", "300", "400", "500", "600",*/ "700", "800", "900", "1000"];
+async function doMergeCollection20211224(collectionName) {
+  const personDirs = ["100"/*, "200", "300", "400", "500", "600", "700", "800", "900", "1000"*/];
   
   const bgDir = "nfts-raw/V20211224/bg";
   const headDir = "nfts-raw/V20211224/head";
   const bgs = fs.readdirSync(bgDir);
   const heads = fs.readdirSync(headDir);
   
-  const collectionName = "collection_20211224";
   const baseDir = "collections/" + collectionName + "/images/";
   const collectionInfo = {
     id: 20211224,
@@ -221,10 +220,6 @@ async function doMergeCollection20211224() {
     }
   }
 
-  fs.writeFileSync(
-    "./collections/" + collectionName + "/collectionInfo.json",
-    JSON.stringify(collectionInfo, undefined, 2)
-  );
   return collectionInfo;
 }
 

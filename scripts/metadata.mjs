@@ -17,7 +17,7 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
     const tokenId = calculateTokenId(collectionId, tokenInfo.id);
     result.tokenIds.add(tokenId);
 
-    const imageUrl = imagePath + tokenInfo.name + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png";
+    const imageUrl = imagePath + "/" + tokenInfo.name + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png";
     const metadata = {
       "name": `Loophead #${tokenInfo.id}`,
       "description": "Loopheads is a Loopring 'Moody Brains' NFT collection",
