@@ -25,7 +25,7 @@ contract Collection/* is ICollection*/
     using OracleLibrary for address;
 
     uint32 public constant CURRENT_PRICE_SECONDS_AGO = 5 minutes;
-    uint32 public constant PREVIOUS_PRICE_SECONDS_AGO = 12 hours;
+    uint32 public constant PREVIOUS_PRICE_SECONDS_AGO = 1 hours;
 
     IUniswapV3Pool immutable public uniswapPool;
     uint32  immutable public /*override*/ collectionID;
