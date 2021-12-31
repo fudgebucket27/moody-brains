@@ -76,11 +76,12 @@ export function genMetadatasForCollection(collectionInfo) {
       };
       for (let i = 0; i < baseLevelsLen; i++) {
         for (let j = 0; j < relativeLevelsLen; j++) {
-          const imageInfo = {
-            big: "images/" + tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png",
-            small: "images_small/" + tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png",
-          }
-          item.images.push(imageInfo);
+          // const imageInfo = {
+          //   big: "images/" + tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png",
+          //   small: "images_small/" + tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png",
+          // }
+          const imageFile = tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png";
+          item.images.push(imageFile);
         }        
       }
       indexInfo.items.push(item);
