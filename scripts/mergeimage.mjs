@@ -5,13 +5,17 @@ const { Canvas, Image } = canvasPkg;
 import BigNumber from "bignumber.js";
 import assert from "assert";
 
-function calculateTokenId(collectionId, tokenId) {
+function calculateTokenId(collectionId, basePrice, tokenId) {
   const collectionIdHexStr = new BigNumber(collectionId).toString(16);
-  const tokenIdHexStr = new BigNumber(tokenId).toString(16);  
+  const basePriceHexStr = new BigNumber(basePrice).toString(16);
+  const tokenIdHexStr = new BigNumber(tokenId).toString(16);
 
   const pad1 = 8 - collectionIdHexStr.length;
-  const pad2 = 56 - tokenIdHexStr.length;
-  const hexStr = "0".repeat(pad1) + collectionIdHexStr + "0".repeat(pad2) + tokenIdHexStr;
+  const pad2 = 32 - basePriceHexStr.length;
+  const pad3 = 24 - tokenIdHexStr.length;
+  const hexStr = "0".repeat(pad1) + collectionIdHexStr +
+    "0".repeat(pad2) + basePriceHexStr +
+    "0".repeat(pad3) + tokenIdHexStr;
   const bn = new BigNumber(hexStr, 16);
   return bn.toString(10);
 }
@@ -24,7 +28,8 @@ async function doMerge20211116() {
 
   const collectionId = "4";
   const tokenId = "1";
-  const tokenDir = calculateTokenId(collectionId, tokenId);
+  const basePrice = "6000";
+  const tokenDir = calculateTokenId(collectionId, basePrice, tokenId);
 
   for (let i = 0; i < bgs.length; i++) {
     for (let j = 0; j < moods.length; j++) {
@@ -94,7 +99,7 @@ async function doMergeCollection1() {
 
   let tokenId = 0;
   for (const person of persons) {
-    tokenId ++;
+    tokenId++;
     // console.log(person);
     const basename = person.replace(/\.[^/.]+$/, "");
     // console.log("basename", basename);
@@ -103,7 +108,7 @@ async function doMergeCollection1() {
     } else {
       gender = "male";
     }
-    
+
     for (const [i, bg] of bgs.entries()) {
       for (const [j, head] of heads.entries()) {
         let b64 = await mergeImages([
@@ -145,12 +150,12 @@ async function doMergeCollection1() {
 
 async function doMergeCollection20211224(collectionName, personDirs) {
   // const personDirs = ["100"/*, "200", "300", "400", "500", "600", "700", "800", "900", "1000"*/];
-  
+
   const bgDir = "nfts-raw/V20211224/bg";
   const headDir = "nfts-raw/V20211224/head";
   const bgs = fs.readdirSync(bgDir);
   const heads = fs.readdirSync(headDir);
-  
+
   const baseDir = "collections/" + collectionName + "/images/";
   const collectionInfo = {
     id: 20211224,
@@ -165,9 +170,9 @@ async function doMergeCollection20211224(collectionName, personDirs) {
   assert(collectionInfo.relativeLevels.length + 1 == heads.length, "relative levels size not equal");
 
   fs.mkdirSync(baseDir, { recursive: true });
-  
-  for(const imageDir of personDirs) {
-    
+
+  for (const imageDir of personDirs) {
+
     const personDir = "nfts-raw/V20211224/100";
     let persons = fs.readdirSync(personDir);
 
@@ -177,7 +182,7 @@ async function doMergeCollection20211224(collectionName, personDirs) {
 
     let tokenId = 0;
     for (const person of persons) {
-      tokenId ++;
+      tokenId++;
       // console.log(person);
       const basename = person.replace(/\.[^/.]+$/, "");
       // console.log("basename", basename);
@@ -186,7 +191,7 @@ async function doMergeCollection20211224(collectionName, personDirs) {
       } else {
         gender = "male";
       }
-      
+
       for (const [i, bg] of bgs.entries()) {
         for (const [j, head] of heads.entries()) {
           let b64 = await mergeImages([

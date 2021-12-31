@@ -23,10 +23,22 @@ async function main() {
 
 
   const collectionInfo = JSON.parse(fs.readFileSync(collectionInfoFile, "ascii"));
-  const metadataInfo = genMetadatasForCollection(collectionInfo);
+  const { metadataInfo , indexInfo } = genMetadatasForCollection(collectionInfo);
   console.log("metadataInfo:", metadataInfo);
+  
+
   const metadataPinResult = await pinDir(metadataInfo.baseDir, "metadata of " + collectionInfo.name);
   console.log("metadataPinResult:", metadataPinResult);
+
+  for (const item of indexInfo.items) {
+    item.defaultURI = "ipfs://" + metadataPinResult.IpfsHash + "/" + item.defaultURILocal.substring(10);
+  }
+  console.log("indexInfo:", indexInfo);
+
+  fs.writeFileSync(
+    "./collections/" + collectionName +"/index.json",
+    JSON.stringify(indexInfo, undefined, 2)
+  );
 
   // await resizeAllImageInDir(
   //   "./collections/" + collectionName +"/images/",
