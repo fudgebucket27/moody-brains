@@ -143,8 +143,8 @@ async function doMergeCollection1() {
   return collectionInfo;
 }
 
-async function doMergeCollection20211224(collectionName) {
-  const personDirs = ["100"/*, "200", "300", "400", "500", "600", "700", "800", "900", "1000"*/];
+async function doMergeCollection20211224(collectionName, personDirs) {
+  // const personDirs = ["100"/*, "200", "300", "400", "500", "600", "700", "800", "900", "1000"*/];
   
   const bgDir = "nfts-raw/V20211224/bg";
   const headDir = "nfts-raw/V20211224/head";

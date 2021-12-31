@@ -1,7 +1,7 @@
 import { calculateTokenId } from "./mergeimage.mjs";
 import fs from "fs";
 
-export function genMetadatasForCollection(collectionInfo, imagePath) {
+export function genMetadatasForCollection(collectionInfo) {
   const collectionId = collectionInfo.id;
   const baseLevelsLen = collectionInfo.baseLevels.length;
   const relativeLevelsLen = collectionInfo.relativeLevels.length;
@@ -13,11 +13,21 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
     nftContractAddress,
     tokenIds: new Set()
   };
+
+  const indexInfo = {
+    properties: {
+      "Minter": "Loopring",
+      "Pair": "LRC/ETH",
+      "Created": "12/2021"
+    },
+    items: []
+  };
+  
   for (const tokenInfo of collectionInfo.tokens) {
     const tokenId = calculateTokenId(collectionId, tokenInfo.id);
     result.tokenIds.add(tokenId);
 
-    const imageUrl = imagePath + "/" + tokenInfo.name + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png";
+    const imageUrl = collectionInfo.imagePath + "/" + tokenInfo.name + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png";
     const metadata = {
       "name": `Loophead #${tokenInfo.id}`,
       "description": "Loopheads is a Loopring 'Moody Brains' NFT collection",
@@ -50,6 +60,10 @@ export function genMetadatasForCollection(collectionInfo, imagePath) {
       metadataDir + "metadata.json",
       JSON.stringify(metadata, undefined, 2)
     );
+
+    if (tokenInfo.i == 2 && tokenInfo.j == 2) {
+
+    }
   }
 
   fs.writeFileSync(

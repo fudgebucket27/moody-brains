@@ -6,8 +6,10 @@ import fs from "fs";
 
 async function main() {
   const collectionName = "collection_20211224_100";
-  
-  // const collectionInfo = await doMergeCollection20211224(collectionName);
+  const personDirs = ["100"];
+
+  const collectionInfoFile = "./collections/" + collectionName + "/collectionInfo.json";
+  // const collectionInfo = await doMergeCollection20211224(collectionName, personDirs);
   // console.log(collectionInfo);
   // // pin Images to IPFS
   // const imagePinResult = await pinDir(collectionInfo.imageDir, "images of " + collectionInfo.name);
@@ -15,20 +17,27 @@ async function main() {
   // const imagePath = "ipfs://" + imagePinResult.IpfsHash;
   // collectionInfo.imagePath = imagePath;
   // fs.writeFileSync(
-  //   "./collections/" + collectionName + "/collectionInfo.json",
+  //   collectionInfoFile,
   //   JSON.stringify(collectionInfo, undefined, 2)
   // );
-  
-  // const metadataInfo = genMetadatasForCollection(collectionInfo, imagePath);
-  // console.log("metadataInfo:", metadataInfo);
-  // const metadataPinResult = await pinDir(metadataInfo.baseDir, "metadata of " + collectionInfo.name);
-  // console.log("metadataPinResult:", metadataPinResult);
 
-  await resizeAllImageInDir(
-    "./collections/" + collectionName +"/images/",
-    "./collections/" + collectionName + "/images_small/"
-  );
+
+  const collectionInfo = JSON.parse(fs.readFileSync(collectionInfoFile, "ascii"));
+  const metadataInfo = genMetadatasForCollection(collectionInfo);
+  console.log("metadataInfo:", metadataInfo);
+  const metadataPinResult = await pinDir(metadataInfo.baseDir, "metadata of " + collectionInfo.name);
+  console.log("metadataPinResult:", metadataPinResult);
+
+  // await resizeAllImageInDir(
+  //   "./collections/" + collectionName +"/images/",
+  //   "./collections/" + collectionName + "/images_small/"
+  // );
 }
+
+// async function uploadMetadata(collectionName) {
+//   const collectionInfoFile = "./collections/" + collectionName + "/collectionInfo.json";
+//   const collectionInfo = fs.read
+// }
 
 main()
   .then(() => process.exit(0))
