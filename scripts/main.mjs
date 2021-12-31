@@ -31,8 +31,9 @@ async function main() {
   console.log("metadataPinResult:", metadataPinResult);
 
   for (const item of indexInfo.items) {
-    item.defaultURI = "ipfs://" + metadataPinResult.IpfsHash + "/" + item.defaultURILocal.substring(10);
+    item.defaultURI = "ipfs://" + metadataPinResult.IpfsHash + "/" + item.defaultURI.substring(10);
   }
+  indexInfo.properties.IPFSHash = metadataPinResult.IpfsHash;
   console.log("indexInfo:", indexInfo);
 
   fs.writeFileSync(

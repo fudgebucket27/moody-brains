@@ -18,17 +18,21 @@ export function genMetadatasForCollection(collectionInfo) {
     properties: {
       "Minter": "Loopring",
       "Pair": "LRC/ETH",
-      "Created": "12/2021"
+      "Created": "12/2021",
+      "IPFSHash": "",
+      "description": "Loopheads is a Loopring 'Moody Brains' NFT collection",
+      "external_uri": "https://loopheads.world"
     },
     items: []
   };
   const basePrice = "6000";
+  const imageDir = "100";
   
   for (const tokenInfo of collectionInfo.tokens) {
     const tokenId = calculateTokenId(collectionId, basePrice, tokenInfo.id);
     result.tokenIds.add(tokenId);
 
-    const imageUrl = collectionInfo.imagePath + "/" + tokenInfo.name + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png";
+    const imageUrl = collectionInfo.imagePath + "/" + tokenInfo.name + "_" + imageDir + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png";
     const metadata = {
       "name": `Loophead #${tokenInfo.id}`,
       "description": "Loopheads is a Loopring 'Moody Brains' NFT collection",
@@ -65,16 +69,16 @@ export function genMetadatasForCollection(collectionInfo) {
     if (tokenInfo.i == 2 && tokenInfo.j == 2) {
       const item = {
         nftID: tokenId,
-        defaultURI: "",
-        defaultURILocal: "metadatas/" + tokenId + "/" + tokenInfo.i + "_" + tokenInfo.j + "/metadata.json",        
-        metadata,
+        name: tokenInfo.name,
+        defaultURI: "metadatas/"+ tokenId + "/" + tokenInfo.i + "_" + tokenInfo.j + "/metadata.json",
+        imageBaseURI: collectionInfo.imagePath,        
         images: []
       };
       for (let i = 0; i < baseLevelsLen; i++) {
         for (let j = 0; j < relativeLevelsLen; j++) {
           const imageInfo = {
-            big: "images/" + tokenInfo.name + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png",
-            small: "images_small/" + tokenInfo.name + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png",
+            big: "images/" + tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png",
+            small: "images_small/" + tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png",
           }
           item.images.push(imageInfo);
         }        
