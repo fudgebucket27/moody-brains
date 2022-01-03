@@ -4,11 +4,60 @@ import { genMetadatasForCollection } from "./metadata.mjs";
 import { resizeAllImageInDir } from "./resize.mjs";
 import fs from "fs";
 
-async function main() {
-  const collectionName = "collection_20211224_100";
-  const personDirs = ["100"];
+function mergeCollectionInfos() {
+  const collectionDirTails = [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "1000"
+  ];
 
-  const collectionInfoFile = "./collections/" + collectionName + "/collectionInfo.json";
+  const collectionInfoMerged = {
+    id: 20211224,
+    name: "collection_20211224",
+    baseLevels: [-25, -10, 10, 25],
+    relativeLevels: [-25, -10, 10, 25],
+    tokens: []
+  };
+
+  // let tokenId = 0;
+  for(const tail of collectionDirTails) {
+    const collectionFile = "./collections/collection_20211224_" + tail + "/collectionInfo.json";
+    const collectionInfo = JSON.parse(fs.readFileSync(collectionFile, "ascii"));
+    for (const token of collectionInfo.tokens) {
+      let tokenName = token.name;
+      // if (tail === "100") {
+      //   tokenName = tokenName + "_100"
+      // }
+      const tokenInfo = {
+        id: token.id + Number(tail),
+        name: tokenName,
+        imageIpfsPath: collectionInfo.imagePath,
+        i: token.i,
+        j: token.j
+      };
+      collectionInfoMerged.tokens.push(tokenInfo);
+    }
+  }
+
+  const collectionDir = "./collections/" + collectionInfoMerged.name;
+  fs.mkdirSync(collectionDir, {recursive: true});
+  fs.writeFileSync(collectionDir + "/collectionInfo.json", JSON.stringify(collectionInfoMerged, undefined, 2));
+
+  return collectionInfoMerged;
+}
+
+async function main() {
+  // const collectionName = "collection_20211224_100";
+  // const personDirs = ["100"];
+
+  // const collectionInfoFile = "./collections/" + collectionName + "/collectionInfo.json";
   // const collectionInfo = await doMergeCollection20211224(collectionName, personDirs);
   // console.log(collectionInfo);
   // // pin Images to IPFS
@@ -21,12 +70,12 @@ async function main() {
   //   JSON.stringify(collectionInfo, undefined, 2)
   // );
 
-
-  const collectionInfo = JSON.parse(fs.readFileSync(collectionInfoFile, "ascii"));
+  const collectionInfo = mergeCollectionInfos();
+  // const collectionInfo = JSON.parse(fs.readFileSync(collectionInfoFile, "ascii"));
   const { metadataInfo , indexInfo } = genMetadatasForCollection(collectionInfo);
   console.log("metadataInfo:", metadataInfo);
   
-
+  console.log("pin metadatas to IPFS...");
   const metadataPinResult = await pinDir(metadataInfo.baseDir, "metadata of " + collectionInfo.name);
   console.log("metadataPinResult:", metadataPinResult);
 
@@ -37,7 +86,7 @@ async function main() {
   console.log("indexInfo:", indexInfo);
 
   fs.writeFileSync(
-    "./collections/" + collectionName +"/index.json",
+    "./collections/" + collectionInfo.name +"/index.json",
     JSON.stringify(indexInfo, undefined, 2)
   );
 

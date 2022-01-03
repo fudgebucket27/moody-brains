@@ -1,5 +1,6 @@
 import { calculateTokenId } from "./mergeimage.mjs";
 import fs from "fs";
+import sharp from 'sharp';
 
 export function genMetadatasForCollection(collectionInfo) {
   const collectionId = collectionInfo.id;
@@ -7,7 +8,7 @@ export function genMetadatasForCollection(collectionInfo) {
   const relativeLevelsLen = collectionInfo.relativeLevels.length + 1;
   const nftContractAddress = "0x1cACC96e5F01e2849E6036F25531A9A064D2FB5f";
 
-  const baseDir = process.cwd() + "/collections/" + collectionInfo.name + "/metadatas/";
+  const baseDir = process.cwd() + "/collections/" + collectionInfo.name + "/metadatas/";  
   const result = {
     baseDir,
     nftContractAddress,
@@ -25,14 +26,16 @@ export function genMetadatasForCollection(collectionInfo) {
     },
     items: []
   };
-  const basePrice = "6000";
-  const imageDir = "100";
+  const basePrice = "160000000000000000"; // baseAmount: 1000 LRC (10**21)
+  // const imageDir = collectionInfo.imageDir;
   
+  const tokenIdNameMap = new Map();
   for (const tokenInfo of collectionInfo.tokens) {
     const tokenId = calculateTokenId(collectionId, basePrice, tokenInfo.id);
+    tokenIdNameMap.set(tokenId, tokenInfo.name);
     result.tokenIds.add(tokenId);
 
-    const imageUrl = collectionInfo.imagePath + "/" + tokenInfo.name + "_" + imageDir + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png";
+    const imageUrl = tokenInfo.imageIpfsPath + "/" + tokenInfo.name + "_" + tokenInfo.i + "_" + tokenInfo.j + ".png";
     const metadata = {
       "name": `Loophead #${tokenInfo.id}`,
       "description": "Loopheads is a Loopring 'Moody Brains' NFT collection",
@@ -71,7 +74,7 @@ export function genMetadatasForCollection(collectionInfo) {
         nftID: tokenId,
         name: tokenInfo.name,
         defaultURI: "metadatas/"+ tokenId + "/" + tokenInfo.i + "_" + tokenInfo.j + "/metadata.json",
-        imageBaseURI: collectionInfo.imagePath,        
+        imageBaseURI: tokenInfo.imageIpfsPath,        
         images: []
       };
       for (let i = 0; i < baseLevelsLen; i++) {
@@ -80,7 +83,7 @@ export function genMetadatasForCollection(collectionInfo) {
           //   big: "images/" + tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png",
           //   small: "images_small/" + tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png",
           // }
-          const imageFile = tokenInfo.name + "_" + imageDir + "_" + i + "_" + j + ".png";
+          const imageFile = tokenInfo.name + "_" + i + "_" + j + ".png";
           item.images.push(imageFile);
         }        
       }
@@ -91,6 +94,12 @@ export function genMetadatasForCollection(collectionInfo) {
   fs.writeFileSync(
     baseDir + "mint-params.json",
     JSON.stringify(result, undefined, 2)
+  );
+
+  const idNameMapFile = "./collections/" + collectionInfo.name + "/id_name_map.json";
+  fs.writeFileSync(
+    idNameMapFile,
+    JSON.stringify([...tokenIdNameMap.entries()], undefined, 2)
   );
 
   return { metadataInfo: result, indexInfo };

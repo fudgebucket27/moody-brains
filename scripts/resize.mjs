@@ -16,4 +16,22 @@ async function resizeAllImageInDir(imgDir, newDir) {
   }
 }
 
+async function createNormalSmallImagesForV20211224() {
+  const collectionDirTails = [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "1000"
+  ];
+
+  fs.mkdirSync("./collections/collection_20211224/images_small");
+  // for (const tail)
+}
+
 export {resizeAllImageInDir};

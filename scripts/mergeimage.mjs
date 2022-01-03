@@ -206,12 +206,13 @@ async function doMergeCollection20211224(collectionName, personDirs) {
           // console.log("b64:", b64);
           b64 = b64.replace(/^data:image\/png;base64,/, "");
 
-          const imageFile = tokenName + "_" + imageDir + "_" + i + "_" + j + ".png";
+          const imageBaseName = tokenName + "_" + imageDir;
+          const imageFile = imageBaseName + "_" + i + "_" + j + ".png";
           fs.writeFileSync(baseDir + imageFile, b64, "base64");
 
           const tokenInfo = {
             id: tokenId,
-            name: tokenName,
+            name: imageBaseName,
             imageSize: Math.ceil(b64.length * 3 / 4),
             gender,
             i,
